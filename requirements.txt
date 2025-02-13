@@ -1,0 +1,18 @@
+# Basic Libraries
+numpy
+pandas
+matplotlib
+seaborn
+
+# Machine Learning
+scikit-learn
+xgboost
+
+# Feature Engineering & Preprocessing
+category_encoders
+
+# Streamlit for Deployment
+streamlit
+
+# Jupyter Notebook (for EDA)
+notebook
