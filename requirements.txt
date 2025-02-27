@@ -16,3 +16,10 @@ streamlit
 
 # Jupyter Notebook (for EDA)
 notebook
+
+mlflow
+
+lightgbm
+
+catboost
+

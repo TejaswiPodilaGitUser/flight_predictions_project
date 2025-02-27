@@ -28,6 +28,10 @@ data/*.xlsx
 # Ignore models and generated artifacts
 models/*.pkl
 models/*.h5
+models/*
+
+mlruns/
+catboost_info/
 
 # Ignore reports and markdown outputs
 reports/*.md

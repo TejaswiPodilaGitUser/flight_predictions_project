@@ -22,43 +22,60 @@ if missing_files:
 # Load Models and Feature Order
 flight_model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
-expected_features = joblib.load(feature_order_path)
-logging.info("✅ Models loaded successfully.")
+expected_features = joblib.load(feature_order_path)  # Ensure this is a list of feature names
+logging.info("✅ Models and feature order loaded successfully.")
 
 def preprocess_input(sample_data):
     """
     Ensures input data matches the trained model's feature order, applies categorical encoding, and scales numeric data.
     """
+    logging.info(f"✈️ Received input data for prediction: {sample_data}")
+
     df = pd.DataFrame([sample_data])
 
-    # **Ensure feature names match exactly (case-sensitive)**
-    df = df.rename(columns=lambda x: x.strip())  # Remove spaces
+    # **Ensure feature names match exactly (case-sensitive, trimmed)**
+    df.columns = df.columns.str.strip()
+    expected_features_cleaned = [col.strip() for col in expected_features]
 
-    # **Ensure all expected features are present**
-    missing_cols = set(expected_features) - set(df.columns)
+    # **Step 1: Validate Features**
+    missing_cols = set(expected_features_cleaned) - set(df.columns)
+    extra_cols = set(df.columns) - set(expected_features_cleaned)
+
     if missing_cols:
-        logging.error(f"❌ Missing features: {missing_cols}")
-        raise ValueError(f"Missing required features: {missing_cols}")
+        logging.error(f"❌ Missing required features: {missing_cols}")
+        raise ValueError(f"❌ Missing required features: {missing_cols}")
 
-    extra_cols = set(df.columns) - set(expected_features)
     if extra_cols:
-        logging.warning(f"⚠️ Unexpected extra columns: {extra_cols}. They will be ignored.")
+        logging.warning(f"⚠️ Extra features detected (will be ignored): {extra_cols}")
 
-    # **Reorder columns to match training order**
-    df = df[expected_features]
+    # **Step 2: Reorder columns strictly to match training order**
+    df = df.reindex(columns=expected_features_cleaned)  # Ensures exact order
 
-    # **Ensure categorical encoding is consistent**
+    logging.info(f"🛠️ Final Feature Order Before Encoding: {df.columns.tolist()}")
+
+    # **Step 3: Handle categorical variables**
     categorical_cols = ["Airline", "Source", "Destination", "Additional_Info", "Route"]
     for col in categorical_cols:
         if col in df.columns:
-            df[col] = df[col].astype("category").cat.as_ordered()
+            df[col] = df[col].astype("category").cat.codes  
+            logging.info(f"🛠️ Converted '{col}' to numeric codes.")
 
-    # **Apply Scaling**
-    df_scaled = scaler.transform(df)
+    logging.info(f"🛠️ Feature Order After Encoding: {df.columns.tolist()}")
 
-    # Debugging logs
-    logging.info(f"🛠️ Final Feature Order Before Scaling: {df.columns.tolist()}")
-    logging.info(f"🔍 Model Expected Order: {expected_features}")
+    # **Final Check Before Scaling**
+    if df.isnull().any().any():
+        logging.error("❌ Reindexing introduced NaN values. Check for mismatched feature names.")
+        raise ValueError("❌ Feature order mismatch or missing values detected.")
+
+    # **Step 4: Apply Scaling**
+    try:
+        df_scaled = scaler.transform(df)
+        logging.info(f"🛠️ Successfully applied scaling.")
+    except ValueError as e:
+        logging.error(f"❌ Feature mismatch error: {e}")
+        logging.error(f"🔄 Expected Features: {list(scaler.feature_names_in_)}")
+        logging.error(f"🔄 Provided Features: {df.columns.tolist()}")
+        raise ValueError(f"❌ Issue with scaling: Feature names must exactly match those used in training.")
 
     return df_scaled
 
@@ -68,6 +85,8 @@ def predict_flight_price(sample_data):
     """
     try:
         processed_data = preprocess_input(sample_data)
+        logging.info(f"🛠️ Processed Data (Before Prediction): {processed_data}")
+
         prediction = flight_model.predict(processed_data)[0]
         logging.info(f"✈️ Predicted Flight Price: ₹{prediction:.2f}")
         return prediction
