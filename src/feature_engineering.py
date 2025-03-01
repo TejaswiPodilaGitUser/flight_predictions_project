@@ -2,6 +2,12 @@ import pandas as pd
 from category_encoders import TargetEncoder
 from sklearn.preprocessing import LabelEncoder
 
+def force_numeric_to_float(df):
+    """Ensure all numeric columns are float to avoid MLflow warnings."""
+    numeric_cols = df.select_dtypes(include=['int', 'int32', 'int64']).columns
+    df[numeric_cols] = df[numeric_cols].astype(float)
+    return df
+
 def feature_engineering(input_file, output_file):
     # Load cleaned data
     df = pd.read_csv(input_file)
@@ -13,6 +19,9 @@ def feature_engineering(input_file, output_file):
     target_encoder = TargetEncoder()
     df[categorical_cols] = target_encoder.fit_transform(df[categorical_cols], df['Price'])
 
+    # Convert all numeric columns to float
+    df = force_numeric_to_float(df)
+    
     # Save processed data
     df.to_csv(output_file, index=False)
     print(f"✅ Feature engineering completed! Processed data saved to: {output_file}")
@@ -29,7 +38,10 @@ def process_passenger_satisfaction(input_file, output_file):
 
     # Label Encoding for 'satisfaction' (Target column)
     df['satisfaction'] = LabelEncoder().fit_transform(df['satisfaction'])
-
+    
+    # Convert all numeric columns to float
+    df = force_numeric_to_float(df)
+    
     df.to_csv(output_file, index=False)
     print(f"✅ Passenger Satisfaction data processed and saved to: {output_file}")
 

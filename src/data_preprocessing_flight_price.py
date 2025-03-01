@@ -48,12 +48,13 @@ def preprocess_flight_data(input_file, output_file):
     flight_df["Total_Stops"] = (
         flight_df["Total_Stops"]
         .replace({"non-stop": 0, "1 stop": 1, "2 stops": 2, "3 stops": 3, "4 stops": 4})
+        .infer_objects(copy=False)  # Explicitly set the old behavior to remove warning
         .fillna(0)
         .astype(int)
     )
 
     # Fill Missing Values
-    flight_df = flight_df.fillna(method="ffill")
+    flight_df = flight_df.ffill()  # Fix warning by using ffill() instead of fillna(method="ffill")
 
     # Save to CSV
     flight_df.to_csv(output_file, index=False)

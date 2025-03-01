@@ -16,8 +16,16 @@ def preprocess_passenger_data(input_file, output_file):
         if col in passenger_df.columns:
             passenger_df[col] = passenger_df[col].astype(str).str.lower().str.strip().fillna("unknown")
 
-    # Fill missing values for other columns
-    passenger_df = passenger_df.ffill()  # Fixed FutureWarning
+    # Fill missing values for all numeric columns
+    numeric_cols = passenger_df.select_dtypes(include=['number']).columns
+    passenger_df[numeric_cols] = passenger_df[numeric_cols].fillna(passenger_df[numeric_cols].median())
+
+    # Convert all numeric columns to float64 to avoid MLflow integer schema warnings
+    passenger_df[numeric_cols] = passenger_df[numeric_cols].astype(float)
+
+    # Drop unnecessary columns
+    drop_cols = ["Unnamed: 0", "id"]
+    passenger_df = passenger_df.drop(columns=[col for col in drop_cols if col in passenger_df.columns])
 
     # Save cleaned data
     passenger_df.to_csv(output_file, index=False)
