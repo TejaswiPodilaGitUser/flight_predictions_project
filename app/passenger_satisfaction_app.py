@@ -1,9 +1,10 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import joblib  # Load the trained model
+import joblib
+import plots_passenger  # ✅ Import the new plots_passenger.py file
 
-# ✅ Load the trained passenger satisfaction model
+# ✅ Load the trained model
 model = joblib.load("models/best_passenger_model.pkl")
 
 # ✅ Load dataset dynamically
@@ -31,7 +32,7 @@ def passenger_satisfaction_app():
 
     st.sidebar.subheader("Passenger Details")
 
-    # ✅ Use dynamically fetched values
+    # ✅ User Input
     gender = st.sidebar.selectbox("Gender", unique_genders)
     customer_type = st.sidebar.selectbox("Customer Type", unique_customer_types)
     age = st.sidebar.number_input("Age", min_value=5, max_value=100, step=1)
@@ -39,7 +40,7 @@ def passenger_satisfaction_app():
     flight_class = st.sidebar.selectbox("Class", unique_flight_classes)
     flight_distance = st.sidebar.number_input("Flight Distance (km)", min_value=100, max_value=10000, step=50)
 
-    # ✅ Use sliders for rating-based inputs
+    # ✅ Sliders for ratings
     inflight_wifi = st.sidebar.slider("Inflight Wifi Service (1-5)", 1, 5, 4)
     dep_arr_convenience = st.sidebar.slider("Departure/Arrival Convenience (1-5)", 1, 5, 4)
     ease_of_booking = st.sidebar.slider("Ease of Online Booking (1-5)", 1, 5, 4)
@@ -81,6 +82,33 @@ def passenger_satisfaction_app():
             prediction = predict_satisfaction(features)
             satisfaction = "Satisfied 😊" if prediction == 1 else "Not Satisfied 😞"
             st.success(f"🛫 Passenger is: {satisfaction}")
+
+    # ✅ Display all plots in a 2x2 grid
+    st.subheader("📊 Data Insights")
+
+    col1, col2 = st.columns(2)  # Create two columns
+
+    with col1:
+        st.subheader("📌 Age Distribution")
+        plots_passenger.plot_age_distribution(df)
+
+    with col2:
+        st.subheader("📌 Flight Distance vs Satisfaction")
+        plots_passenger.plot_flight_distance_vs_satisfaction(df)
+
+    col3, col4 = st.columns(2)  # Second row of plots
+
+    with col3:
+        st.subheader("📌 Departure Delay vs Satisfaction")
+        plots_passenger.plot_delay_vs_satisfaction(df)
+
+    with col4:
+        st.subheader("📌 Class-wise Satisfaction")
+        plots_passenger.plot_class_vs_satisfaction(df)
+
+    # ✅ Feature Importance in a full row
+    st.subheader("📌 Feature Importance")
+    plots_passenger.plot_feature_importance(df)
 
 if __name__ == "__main__":
     passenger_satisfaction_app()
