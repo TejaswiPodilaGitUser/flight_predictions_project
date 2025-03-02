@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Set Streamlit page layout to wide
-st.set_page_config(page_title="Flight Price EDA", layout="wide")
+#st.set_page_config(page_title="Flight Price EDA", layout="wide")
 
 # Load Dataset
 @st.cache_data
@@ -48,38 +48,42 @@ def plot_correlation_heatmap(df):
     plt.xticks(rotation=30, ha="right")
     return fig
 
-# Streamlit App
-st.markdown("<h1 style='text-align: center;'>✈️ Flight Price EDA Dashboard</h1>", unsafe_allow_html=True)
+
+def main():
+    # Streamlit App
+    st.markdown("<h1 style='text-align: center;'>✈️ Flight Price EDA Dashboard</h1>", unsafe_allow_html=True)
 
 
-df = load_dataset("data/processed/Cleaned_Processed_Flight_Price.csv")
+    df = load_dataset("data/processed/Cleaned_Processed_Flight_Price.csv")
 
 
-# Visualizations
-st.markdown("<h3 style='text-align: center;'>📊 Visualizations</h3>", unsafe_allow_html=True)
-col1, col2 = st.columns(2)
+    # Visualizations
+    st.markdown("<h3 style='text-align: center;'>📊 Visualizations</h3>", unsafe_allow_html=True)
+    col1, col2 = st.columns(2)
 
-with col1:
-    st.pyplot(plot_price_distribution(df))
-    st.pyplot(plot_route_vs_price(df))
+    with col1:
+        st.pyplot(plot_price_distribution(df))
+        st.pyplot(plot_route_vs_price(df))
 
-with col2:
-    st.pyplot(plot_airline_vs_price(df))
-    st.pyplot(plot_correlation_heatmap(df))
+    with col2:
+        st.pyplot(plot_airline_vs_price(df))
+        st.pyplot(plot_correlation_heatmap(df))
 
 
-# Display top and bottom 5 prices
-st.markdown("<h3 style='text-align: center;'>💰 Top & Least 5 Prices</h3>", unsafe_allow_html=True)
+    # Display top and bottom 5 prices
+    st.markdown("<h3 style='text-align: center;'>💰 Top & Least 5 Prices</h3>", unsafe_allow_html=True)
 
-# Create empty space between columns using three columns
-spacer,col1, spacer, col2 = st.columns([0.4,1, 0.2, 1])  # Adjusting widths (0.2 is the space)
+    # Create empty space between columns using three columns
+    spacer,col1, spacer, col2 = st.columns([0.4,1, 0.2, 1])  # Adjusting widths (0.2 is the space)
 
-with col1:
-    st.write("🔝 Top 5 Highest Prices")
-    st.dataframe(df.nlargest(5, "Price")[["Airline", "Route", "Price"]])
-with col2:
-    st.write("🔻 Lowest 5 Prices")
-    st.dataframe(df.nsmallest(5, "Price")[["Airline", "Route", "Price"]])
+    with col1:
+        st.write("🔝 Top 5 Highest Prices")
+        st.dataframe(df.nlargest(5, "Price")[["Airline", "Route", "Price"]])
+    with col2:
+        st.write("🔻 Lowest 5 Prices")
+        st.dataframe(df.nsmallest(5, "Price")[["Airline", "Route", "Price"]])
 
-st.success("✅ EDA Analysis Completed!")
+    st.success("✅ EDA Analysis Completed!")
 
+if __name__ == "__main__":
+    main()

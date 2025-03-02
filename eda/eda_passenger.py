@@ -6,7 +6,7 @@ from sklearn.metrics import confusion_matrix
 import joblib
 
 # Set Streamlit page layout to wide
-st.set_page_config(page_title="Passenger Satisfaction EDA", layout="wide")
+#st.set_page_config(page_title="Passenger Satisfaction EDA", layout="wide")
 
 def load_dataset(file_path):
     """Loads the dataset and returns a DataFrame."""
