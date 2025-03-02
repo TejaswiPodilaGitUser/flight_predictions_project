@@ -13,20 +13,22 @@ def predict_price(features):
 def flight_price_app():
     st.title("✈️ Flight Price Prediction")
 
-    # User Inputs
-    airline = st.selectbox("Airline", ["Air India", "IndiGo", "SpiceJet", "Vistara"])
-    source = st.selectbox("Source", ["Delhi", "Mumbai", "Bangalore", "Kolkata"])
-    destination = st.selectbox("Destination", ["Hyderabad", "Chennai", "Goa", "Pune"])
-    route = st.text_input("Route (e.g., 'BLR → DEL')")
-    stops = st.selectbox("Total Stops", ["Non-stop", "1 Stop", "2 Stops", "3+ Stops"])
-    additional_info = st.selectbox("Additional Info", ["No info", "In-flight meal", "Extra baggage", "Other"])
-    journey_day = st.slider("Journey Day", 1, 31, 15)
-    journey_month = st.slider("Journey Month", 1, 12, 6)
-    dep_hour = st.slider("Departure Hour", 0, 23, 10)
-    dep_minute = st.slider("Departure Minute", 0, 59, 30)
-    arr_hour = st.slider("Arrival Hour", 0, 23, 12)
-    arr_minute = st.slider("Arrival Minute", 0, 59, 45)
-    duration_minutes = st.number_input("Duration (minutes)", min_value=30, max_value=1440, step=10)
+    st.sidebar.subheader("Flight Details")
+
+    # Move inputs to sidebar
+    airline = st.sidebar.selectbox("Airline", ["Air India", "IndiGo", "SpiceJet", "Vistara"])
+    source = st.sidebar.selectbox("Source", ["Delhi", "Mumbai", "Bangalore", "Kolkata"])
+    destination = st.sidebar.selectbox("Destination", ["Hyderabad", "Chennai", "Goa", "Pune"])
+    route = st.sidebar.text_input("Route (e.g., 'BLR → DEL')")
+    stops = st.sidebar.selectbox("Total Stops", ["Non-stop", "1 Stop", "2 Stops", "3+ Stops"])
+    additional_info = st.sidebar.selectbox("Additional Info", ["No info", "In-flight meal", "Extra baggage", "Other"])
+    journey_day = st.sidebar.slider("Journey Day", 1, 31, 15)
+    journey_month = st.sidebar.slider("Journey Month", 1, 12, 6)
+    dep_hour = st.sidebar.slider("Departure Hour", 0, 23, 10)
+    dep_minute = st.sidebar.slider("Departure Minute", 0, 59, 30)
+    arr_hour = st.sidebar.slider("Arrival Hour", 0, 23, 12)
+    arr_minute = st.sidebar.slider("Arrival Minute", 0, 59, 45)
+    duration_minutes = st.sidebar.number_input("Duration (minutes)", min_value=30, max_value=1440, step=10)
 
     # Encode categorical inputs
     airline_encoded = ["Air India", "IndiGo", "SpiceJet", "Vistara"].index(airline)
@@ -38,8 +40,8 @@ def flight_price_app():
     # Encode Route (basic handling: count number of stops in the route)
     route_encoded = len(route.split("→")) - 1 if route else 0  # Convert route string into number of stops
 
-    # Predict button
-    if st.button("Predict Price"):
+    # Predict button in sidebar
+    if st.sidebar.button("Predict Price"):
         features = [
             airline_encoded, source_encoded, destination_encoded, route_encoded, stops_encoded, 
             additional_info_encoded, journey_day, journey_month, dep_hour, dep_minute, 
@@ -48,5 +50,4 @@ def flight_price_app():
 
         # Ensure correct feature count
         prediction = predict_price(features)
-        st.success(f"💰 Predicted Flight Price: ₹{round(prediction, 2)}")
-
+        st.subheader(f"💰 Predicted Flight Price: ₹{round(prediction, 2)}")

@@ -12,8 +12,8 @@ def feature_engineering(input_file, output_file):
     # Load cleaned data
     df = pd.read_csv(input_file)
 
-    # Identify categorical columns
-    categorical_cols = ['Airline', 'Source', 'Destination', 'Total_Stops']
+    # Identify categorical columns (excluding 'Airline' to retain original names)
+    categorical_cols = ['Source', 'Destination', 'Total_Stops']
 
     # Target Encoding for categorical features (based on average price)
     target_encoder = TargetEncoder()

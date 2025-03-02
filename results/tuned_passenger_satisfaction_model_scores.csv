@@ -1,0 +1,2 @@
+Model,Accuracy,F1_Score
+XGBClassifier,0.963764977623791,0.9577985764725663

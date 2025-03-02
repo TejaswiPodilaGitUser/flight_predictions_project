@@ -7,10 +7,10 @@ st.set_page_config(page_title="Flight & Passenger Prediction", layout="wide")
 
 # Sidebar navigation
 st.sidebar.title("🔍 Select a Prediction Task")
-page = st.sidebar.radio("Go to:", ["✈️ Flight Price Prediction", "😊 Passenger Satisfaction Prediction"])
+page = st.sidebar.radio("Go to:", ["✈️ Flight Price Predictions", "😊 Passenger Satisfaction Predictions"])
 
 # Load the appropriate page based on selection
-if page == "✈️ Flight Price Prediction":
+if page == "✈️ Flight Price Predictions":
     flight_price_app()
-elif page == "😊 Passenger Satisfaction Prediction":
+elif page == "😊 Passenger Satisfaction Predictions":
     passenger_satisfaction_app()
