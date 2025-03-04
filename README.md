@@ -1,12 +1,15 @@
 # Flight Price and Customer Satisfaction Prediction
 
-This repository contains a **Flight Price Prediction** and **Customer Satisfaction Prediction** system built using machine learning models and deployed as a Streamlit application. The project includes data preprocessing, model training, evaluation, and visualization.
+This repository contains a **Flight Price Prediction** and **Customer Satisfaction Prediction** system built using machine learning models and deployed as a Streamlit application. The project includes data preprocessing, feature engineering, model training, evaluation, and visualization.
 
 ## 📌 Features
 - **Flight Price Prediction**: Predicts the price of flight tickets based on historical data.
 - **Customer Satisfaction Prediction**: Classifies whether a passenger is satisfied or not.
 - **Multiple Machine Learning Models**: Compares 5-6 models for better performance.
 - **EDA & Visualizations**: Displays key insights using Seaborn & Matplotlib.
+- **Feature Engineering**: Extracts meaningful features for better model performance.
+- **Data Cleaning & Preprocessing**: Handles missing values, outliers, and transformations.
+- **SMOTE for Imbalanced Data**: Synthetic Minority Over-sampling Technique applied for balancing datasets.
 - **Streamlit Web App**: Interactive UI for predictions.
 
 ## 📁 Project Structure
@@ -63,15 +66,24 @@ streamlit run src/main.py
 ```
 
 ## 📈 Model Training & Evaluation
-- Models Used: XGBoost, LightGBM, Random Forest, Decision Tree, SVM, and Logistic Regression.
-- Best models are saved as:
+- **Data Cleaning & Feature Engineering**: 
+  - Handled missing values, outliers, and categorical encoding.
+  - Created new features for improved model accuracy.
+- **Models Used**: XGBoost, LightGBM, Random Forest, Decision Tree, SVM, and Logistic Regression.
+- **SMOTE Applied**: Balanced dataset using Synthetic Minority Over-sampling Technique.
+- **Best models are saved as:**
   - `models/best_flight_price_model.pkl`
   - `models/best_satisfaction_model.pkl`
+- **Plots & Predictions**:
+  - Feature importance visualization.
+  - Prediction trend analysis.
+  - Model performance comparison plots.
 
 ## 🖥️ Web App Features
 - **Flight Price Prediction**: Users enter flight details to get a price estimate.
 - **Customer Satisfaction Prediction**: Users enter passenger details to check satisfaction.
 - **Data Insights & Visualizations**: Displays key patterns from the dataset.
+- **Prediction Plots**: Visualizes model outputs and trends.
 
 ## 🔧 Future Enhancements
 - Deploy on cloud (AWS/GCP/Heroku)
