@@ -7,7 +7,7 @@ def plot_airline_vs_price(df):
     avg_price_per_airline = df.groupby("Airline")["Price"].mean().sort_values()
     plt.figure(figsize=(8, 5))
     sns.barplot(x=avg_price_per_airline.index, y=avg_price_per_airline.values, palette="coolwarm")
-    plt.xticks(rotation=45)
+    plt.xticks(rotation=45, ha="right")
     plt.title("✈️ Average Flight Price by Airline")
     plt.xlabel("Airline")
     plt.ylabel("Average Price (₹)")
@@ -51,3 +51,19 @@ def plot_duration_vs_price(df):
     plt.xlabel("Flight Duration (minutes)")
     plt.ylabel("Price (₹)")
     st.pyplot(plt)
+
+# ✅ Function to call all plots
+def show_all_flight_price_plots(df):
+    st.subheader("📊 Flight Price Analysis")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        plot_airline_vs_price(df)
+        plot_stops_vs_price(df)
+
+    with col2:
+        plot_source_vs_destination(df)
+        plot_dep_hour_vs_price(df)
+
+    st.subheader("📉 Additional Insights")
+    plot_duration_vs_price(df)

@@ -6,6 +6,7 @@ import logging
 import mlflow
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.impute import SimpleImputer
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.svm import SVR
@@ -20,7 +21,7 @@ os.makedirs("models", exist_ok=True)
 os.makedirs("results", exist_ok=True)
 
 # Initialize MLflow
-mlflow.set_experiment("Flight Price Prediction")
+mlflow.set_experiment("Flight Price Predictions")
 
 # Load dataset
 flight_data_path = "data/processed/Cleaned_Processed_Flight_Price.csv"
@@ -61,6 +62,15 @@ for col in X.select_dtypes(include=['int']).columns:
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Handle missing values by replacing them with the median
+imputer = SimpleImputer(strategy="median")
+X_train = pd.DataFrame(imputer.fit_transform(X_train), columns=X_train.columns)
+X_test = pd.DataFrame(imputer.transform(X_test), columns=X_test.columns)
+
+# Save the imputer
+joblib.dump(imputer, "models/flight_price_imputer.pkl")
+logging.info("✅ Missing values handled using median imputation.")
 
 # Feature scaling
 scaler = StandardScaler()

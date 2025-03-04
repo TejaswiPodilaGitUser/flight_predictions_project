@@ -35,7 +35,7 @@ def passenger_satisfaction_app():
     # ✅ User Input
     gender = st.sidebar.selectbox("Gender", unique_genders)
     customer_type = st.sidebar.selectbox("Customer Type", unique_customer_types)
-    age = st.sidebar.number_input("Age", min_value=5, max_value=100, step=1)
+    age = st.sidebar.number_input("Age", min_value=5, max_value=100, step=1, value=25)
     travel_type = st.sidebar.selectbox("Type of Travel", unique_travel_types)
     flight_class = st.sidebar.selectbox("Class", unique_flight_classes)
     flight_distance = st.sidebar.number_input("Flight Distance (km)", min_value=100, max_value=10000, step=50)
@@ -108,7 +108,7 @@ def passenger_satisfaction_app():
 
     # ✅ Feature Importance in a full row
     st.subheader("📌 Feature Importance")
-    plots_passenger.plot_feature_importance(df)
+    plots_passenger.plot_feature_importance("models/best_passenger_satisfaction_model.pkl",df)
 
 if __name__ == "__main__":
     passenger_satisfaction_app()
