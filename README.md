@@ -1,5 +1,12 @@
 # Flight Price and Customer Satisfaction Prediction
 
+
+<img width="1710" alt="image" src="https://github.com/user-attachments/assets/323857cf-5fa2-4933-897d-033e17524ad9" />
+
+<img width="1631" alt="image" src="https://github.com/user-attachments/assets/0cacfd56-8447-4065-a376-48680f22c126" />
+
+
+
 This repository contains a **Flight Price Prediction** and **Customer Satisfaction Prediction** system built using machine learning models and deployed as a Streamlit application. The project includes data preprocessing, feature engineering, model training, evaluation, and visualization.
 
 ## 📌 Features
