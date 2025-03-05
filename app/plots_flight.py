@@ -23,6 +23,7 @@ def plot_source_vs_destination(df):
     plt.ylabel("Source")
     st.pyplot(plt)
 
+
 # ✅ Function to plot Stops vs Flight Price
 def plot_stops_vs_price(df):
     avg_price_per_stop = df.groupby("Total_Stops")["Price"].mean()

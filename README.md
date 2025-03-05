@@ -81,6 +81,21 @@ streamlit run src/main.py
 - **Best models are saved as:**
   - `models/best_flight_price_model.pkl`
   - `models/best_satisfaction_model.pkl`
+
+
+  ![alt text](image.png)
+
+
+Model Training Scores
+
+
+![alt text](image-1.png)
+
+
+![alt text](image-2.png)
+
+
+
 - **Plots & Predictions**:
   - Feature importance visualization.
   - Prediction trend analysis.

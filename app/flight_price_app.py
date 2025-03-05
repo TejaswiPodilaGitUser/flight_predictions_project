@@ -29,7 +29,7 @@ def predict_price(features):
 
 # ✅ Flight Price App
 def flight_price_app():
-    st.title("✈️ Flight Price Prediction")
+    st.markdown("<h3 style='text-align: center;'>✈️ Flight Price Prediction</h3>", unsafe_allow_html=True)
 
     st.sidebar.subheader("Flight Details")
 
@@ -71,7 +71,7 @@ def flight_price_app():
         st.subheader(f"💰 Predicted Flight Price: ₹{round(prediction, 2)}")
 
     # ✅ Display All Plots Without Selection
-    st.markdown("## 📊 Flight Price Insights")
+    st.markdown("### 📊 Flight Price Insights")
 
     col1, col2 = st.columns(2)
     with col1:

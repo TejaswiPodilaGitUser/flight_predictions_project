@@ -28,7 +28,9 @@ def predict_satisfaction(features):
 
 # ✅ Streamlit App
 def passenger_satisfaction_app():
-    st.title("😊 Passenger Satisfaction Prediction")
+    #st.title("😊 Passenger Satisfaction Prediction")
+    st.markdown("<h3 style='text-align: center;'>😊 Passenger Satisfaction Prediction</h3>", unsafe_allow_html=True)
+
 
     st.sidebar.subheader("Passenger Details")
 
@@ -108,7 +110,7 @@ def passenger_satisfaction_app():
 
     # ✅ Feature Importance in a full row
     st.subheader("📌 Feature Importance")
-    plots_passenger.plot_feature_importance("models/best_passenger_satisfaction_model.pkl",df)
+    plots_passenger.plot_feature_importance("models/tuned_passenger_satisfaction_model.pkl",df)
 
 if __name__ == "__main__":
     passenger_satisfaction_app()
