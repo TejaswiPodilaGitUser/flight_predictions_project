@@ -1,5 +1,5 @@
 import streamlit as st
-from eda_flight import load_dataset as load_flight_data, plot_price_distribution, plot_airline_vs_price, plot_route_vs_price, plot_correlation_heatmap
+from eda_flight import load_dataset as load_flight_data, plot_price_distribution, plot_airline_vs_price,plot_stops_vs_price, plot_correlation_heatmap
 from eda_passenger import load_dataset as load_passenger_data, display_insights, plot_satisfaction_distribution, plot_feature_correlations, load_model_and_data, plot_confusion_matrix
 
 # Set Streamlit page layout only in the main script
@@ -14,12 +14,13 @@ tab1, tab2 = st.tabs(["✈️ Flight Price EDA", "🛫 Passenger Satisfaction ED
 with tab1:
     st.markdown("<h2 style='text-align: center;'>✈️ Flight Price EDA</h2>", unsafe_allow_html=True)
     
-    df_flight = load_flight_data("data/processed/Cleaned_Processed_Flight_Price.csv")
+    df_flight = load_flight_data("data/cleaned/Cleaned_Flight_Price.csv")
+    #df_flight = load_flight_data("data/processed/Cleaned_Processed_Flight_Price.csv")
 
     spacer,col1, spacer, col2 = st.columns([0.4,1, 0.2, 1])  # Adjusting widths (0.2 is the space)
     with col1:
         st.pyplot(plot_price_distribution(df_flight))
-        st.pyplot(plot_route_vs_price(df_flight))
+        st.pyplot(plot_stops_vs_price(df_flight))
 
     with col2:
         st.pyplot(plot_airline_vs_price(df_flight))

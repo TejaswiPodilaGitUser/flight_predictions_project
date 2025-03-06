@@ -29,7 +29,8 @@ def predict_price(features):
 
 # ✅ Flight Price App
 def flight_price_app():
-    st.markdown("<h3 style='text-align: center;'>✈️ Flight Price Prediction</h3>", unsafe_allow_html=True)
+    # Use a smaller heading size
+    st.markdown("<h4 style='text-align: center;'>✈️ Flight Price Prediction</h4>", unsafe_allow_html=True)
 
     st.sidebar.subheader("Flight Details")
 
@@ -41,7 +42,7 @@ def flight_price_app():
     additional_info = st.sidebar.selectbox("Additional Info", unique_additional_info)
 
     # Other Inputs
-    route = st.sidebar.text_input("Route (e.g., 'BLR → DEL')")
+    #route = st.sidebar.text_input("Route (e.g., 'BLR → DEL')")
     journey_day = st.sidebar.slider("Journey Day", 1, 31, 15)
     journey_month = st.sidebar.slider("Journey Month", 1, 12, 6)
     dep_hour = st.sidebar.slider("Departure Hour", 0, 23, 10)
@@ -58,12 +59,12 @@ def flight_price_app():
     additional_info_encoded = unique_additional_info.index(additional_info)
     
     # Encode Route (basic handling: count number of stops in the route)
-    route_encoded = len(route.split("→")) - 1 if route else 0  
+   # route_encoded = len(route.split("→")) - 1 if route else 0  
 
     # ✅ Predict button
     if st.sidebar.button("Predict Price"):
         features = [
-            airline_encoded, source_encoded, destination_encoded, route_encoded, stops_encoded, 
+            airline_encoded, source_encoded, destination_encoded, stops_encoded, 
             additional_info_encoded, journey_day, journey_month, dep_hour, dep_minute, 
             arr_hour, arr_minute, duration_minutes
         ]
@@ -75,17 +76,21 @@ def flight_price_app():
 
     col1, col2 = st.columns(2)
     with col1:
+        st.subheader("✈️ Average Flight Price by Airline")
         plots_flight.plot_airline_vs_price(df)
     with col2:
+        st.subheader("🌍 Flight Price Heatmap (Source → Destination)")
         plots_flight.plot_source_vs_destination(df)
 
     col3, col4 = st.columns(2)
     with col3:
+        st.subheader("📌 Flight Distance vs Satisfaction")
         plots_flight.plot_stops_vs_price(df)
     with col4:
+        st.subheader("⏳ Flight Price by Number of Stops")
         plots_flight.plot_dep_hour_vs_price(df)
 
-    st.markdown("## ⌛ Flight Duration vs Price")
+    st.markdown("### 🕒 Flight Price by Departure Hour")
     plots_flight.plot_duration_vs_price(df)
 
 if __name__ == "__main__":
