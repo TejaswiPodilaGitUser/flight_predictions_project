@@ -1,9 +1,18 @@
 # Flight Price and Customer Satisfaction Prediction
 
 
-<img width="1710" alt="image" src="https://github.com/user-attachments/assets/323857cf-5fa2-4933-897d-033e17524ad9" />
+##Streamlit app
 
-<img width="1631" alt="image" src="https://github.com/user-attachments/assets/0cacfd56-8447-4065-a376-48680f22c126" />
+- **Flight Price Prediction**:
+<img width="1685" alt="image" src="https://github.com/user-attachments/assets/884c918d-9df9-43e2-afbd-40be2070f2c8" />
+
+<img width="1659" alt="image" src="https://github.com/user-attachments/assets/5252913d-d2e5-498a-8c46-5d852b319dad" />
+
+- **Customer Satisfaction Prediction**:
+  
+<img width="1665" alt="image" src="https://github.com/user-attachments/assets/74b4d548-8a87-4af3-990e-d59aed24eb16" />
+
+<img width="1655" alt="image" src="https://github.com/user-attachments/assets/680a9ec8-4375-45d9-bc2a-df906e617252" />
 
 
 
@@ -95,11 +104,16 @@ Model Training Scores
 ![alt text](image-2.png)
 
 
-
 - **Plots & Predictions**:
   - Feature importance visualization.
   - Prediction trend analysis.
   - Model performance comparison plots.
+ 
+- **EDA**:
+<img width="976" alt="image" src="https://github.com/user-attachments/assets/5d76492f-1dd0-4969-98eb-7db1ec8e5013" />
+
+<img width="994" alt="image" src="https://github.com/user-attachments/assets/c0796c09-f7e8-4e53-b3e3-a48c2206ddbd" />
+
 
 ## 🖥️ Web App Features
 - **Flight Price Prediction**: Users enter flight details to get a price estimate.
